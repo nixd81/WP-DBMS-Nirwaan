@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center; }
+        .success-message { color: #4CAF50; font-size: 24px; margin: 20px 0; }
+        .btn { background: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; display: inline-block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="success-message">Booking Successful!</div>
+    <p>Your reservation has been confirmed.</p>
+    <p>Reservation ID: <span id="reservationId"></span></p>
+    <a href="/customer-dashboard" class="btn">Back to Search</a>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const reservationId = urlParams.get('reservationId');
+        document.getElementById('reservationId').textContent = reservationId;
+    </script>
+</body>
+</html>

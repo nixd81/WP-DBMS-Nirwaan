@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommended Menu</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .menu-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .menu-table th, .menu-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .menu-table th { background-color: #f2f2f2; }
+        button { padding: 10px 15px; background-color: #c1b59f; color: white; border: none; cursor: pointer; margin-top: 20px; }
+        button:hover { background-color: #45a049; }
+        .cafe-info { margin-bottom: 20px; }
+        
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recommended Menu</h1>
+    <div id="cafeInfo" class="cafe-info"></div>
+    <div id="menuDetails"></div>
+    <button onclick="window.location.href='/time-slots'">Book Time Slot</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/get-recommended-menu')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const menuDetails = document.getElementById('menuDetails');
+                    
+                    if (!data || !data.menu) {
+                        menuDetails.innerHTML = '<p class="error">Error: Invalid data received from server</p>';
+                        return;
+                    }
+                    
+                    if (data.menu.length === 0) {
+                        menuDetails.innerHTML = '<p>No menu items found matching your criteria.</p>';
+                        return;
+                    }
+                    
+                    menuDetails.innerHTML = `
+                        <div class="cafe-info">
+                            <h2>${data.cafe.NAME}</h2>
+                            <p>Budget: ₹${data.budgetPerPerson} per person (₹${data.totalBudget} total)</p>
+                        </div>
+                        <table class="menu-table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Price (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.menu.map(item => {
+                                    // Safely format the price
+                                    const price = typeof item.PRICE === 'number' ? 
+                                        item.PRICE.toFixed(2) : 
+                                        Number(item.PRICE || 0).toFixed(2);
+                                    return `
+                                        <tr>
+                                            <td>${item.NAME}</td>
+                                            <td>${price}</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                                <tr class="total-row">
+                                    <td><strong>Total</strong></td>
+                                    <td><strong>₹${typeof data.total === 'number' ? 
+                                        data.total.toFixed(2) : 
+                                        Number(data.total || 0).toFixed(2)}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('menuDetails').innerHTML = `
+                        <p class="error">Error loading menu: ${error.message}</p>
+                    `;
+                });
+        });
+        </script>
+</body>
+</html>

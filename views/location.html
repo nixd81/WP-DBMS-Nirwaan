@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Location</title>
+    <style>
+        body {
+            background-color: #FEFAF1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #D4C9BE;
+            border: none;
+            padding: 15px 50px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2em;
+            width: 200px; /* Same width for all buttons */
+            height: 50px; /* Same height for all buttons */
+        }
+
+        button:hover {
+            background-color: #c1b59f;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="\images\logos.png" alt="Logo"> <!-- Replace 'logo.png' with your actual logo path -->
+    </div>
+    <div class="container">
+        <h1>Select Your Preferred Location</h1>
+        <form action="/location" method="post">
+            <button type="submit" name="location" value="Bandra">Bandra</button><br>
+            <button type="submit" name="location" value="Juhu">Juhu</button><br>
+            <button type="submit" name="location" value="Andheri">Andheri</button><br><br>
+        </form>
+    </div>
+</body>
+</html>

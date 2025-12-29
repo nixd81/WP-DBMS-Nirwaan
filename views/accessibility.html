@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accessibility Needs</title>
+    <style>
+        body {
+            background-color: #FEFAF1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        input[type="radio"] {
+            margin: 10px;
+            width: 25px;
+            height: 25px;
+        }
+
+        label {
+            font-size: 1.5em;
+        }
+
+        button {
+            background-color: #D4C9BE;
+            border: none;
+            padding: 20px 50px;
+            margin: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.5em;
+            width: 250px;
+            height: 70px; /* Increased button height */
+        }
+
+        button:hover {
+            background-color: #c1b59f;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="\images\logos.png" alt="Logo"> <!-- Replace 'logo.png' with your actual logo path -->
+    </div>
+    <div class="container">
+        <h1>Accessibility Needs</h1>
+        <form action="/accessibility" method="post">
+            <p>Is there a person with disability in your group?</p>
+            
+            <input type="radio" id="yes" name="disability" value="yes" required>
+            <label for="yes">Yes</label><br>
+            
+            <input type="radio" id="no" name="disability" value="no">
+            <label for="no">No</label><br><br>
+            
+            <button type="submit">Next</button>
+        </form>
+    </div>
+</body>
+</html>

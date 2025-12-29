@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to Nirwaan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --latte-bg: #f8f1e7;
+      --coffee: #7b4b3a;
+      --mocha: #a9746e;
+      --cream: #fff5ea;
+      --caramel: #dcb69f;
+      --text-dark: #2c1e13;
+      --button-bg: #b76e55;
+      --button-hover: #9d5643;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: linear-gradient(135deg, var(--cream), var(--latte-bg));
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background-color: var(--cream);
+      padding: 20px 40px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-image {
+      max-height: 55px;
+      border-radius: 10px;
+    }
+
+    .btn-custom {
+      background-color: var(--caramel);
+      color: var(--text-dark);
+      border: none;
+      border-radius: 30px;
+      padding: 10px 22px;
+      font-weight: 500;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-custom:hover {
+      background-color: var(--mocha);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 10%;
+      background: url('https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=1600&q=80') no-repeat center;
+      background-size: cover;
+      background-attachment: fixed;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .welcome-text {
+      max-width: 700px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 30px;
+      border-radius: 16px;
+    }
+
+    .welcome-title {
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .features-container {
+      display: none;
+    }
+
+    .footer {
+      padding: 20px 10%;
+      background-color: var(--cream);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .start-btn {
+      background-color: var(--button-bg);
+      color: white;
+      padding: 12px 28px;
+      font-size: 18px;
+      border-radius: 30px;
+      font-weight: 500;
+      border: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .start-btn:hover {
+      background-color: var(--button-hover);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .welcome-title {
+        font-size: 32px;
+      }
+      .navbar {
+        padding: 15px 20px;
+      }
+      .main-content {
+        padding: 40px 5%;
+      }
+      .footer {
+        padding: 20px 5%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="/images/logos.png" alt="Coffee Cup Logo" class="logo-image" />
+      </a>
+      <div class="d-flex">
+        <a href="/help" class="btn btn-custom me-3">Help</a>
+        <a href="/logout" class="btn btn-custom">Log out</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="welcome-text">
+      <h1 class="welcome-title">
+        Welcome to Nirwaan,<br />
+        Smart Café Recommendations,<br />
+        Budget-Friendly &<br />
+        Accessibility First.
+      </h1>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <button class="start-btn" onclick="window.location.href='/party-size'">Start Budgeting</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

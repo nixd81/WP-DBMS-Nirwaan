@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .product-showcase {
+            background-color: rgba(254, 250, 241, 1);
+            overflow: hidden;
+        }
+
+        .product-container {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: 1024px;
+            width: 100%;
+            padding: 310px 80px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .background-image {
+            position: absolute;
+            inset: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .product-image {
+            aspect-ratio: 1.09;
+            object-fit: contain;
+            object-position: center;
+            width: 440px;
+            margin-bottom: -69px;
+            max-width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 991px) {
+            .product-container {
+                max-width: 100%;
+                padding: 100px 20px;
+            }
+
+            .product-image {
+                margin-bottom: 10px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <main class="product-showcase">
+        <section class="product-container">
+          <img src="C:\Users\bhuva\Downloads\bg.jpg" alt="Product background" class="background-image" />
+          <img src="C:\Users\bhuva\Downloads\nirwan_full-removebg-preview.png" alt="Product display" class="product-image" />
+        </section>
+      </main>
+</body>
+</html>

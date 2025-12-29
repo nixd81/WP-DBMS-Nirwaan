@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Cafes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #fefcfb;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #6c584c;
+            margin-top: 80px;
+            font-size: 2.5rem;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+
+        .cafe-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .cafe-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 320px;
+            transition: transform 0.3s ease;
+        }
+
+        .cafe-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .cafe-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .cafe-info {
+            padding: 20px;
+        }
+
+        .cafe-name {
+            font-size: 1.4rem;
+            color: #6c584c;
+            margin-bottom: 8px;
+        }
+
+        .cafe-location {
+            font-size: 0.95rem;
+            color: #8b8b8b;
+            margin: 5px 0;
+        }
+
+        .cafe-description {
+            font-size: 0.95rem;
+            color: #444;
+            margin: 12px 0;
+        }
+
+        .select-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #a98467;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .select-btn:hover {
+            background-color: #dbc1ac;
+            color: #333;
+        }
+
+        .no-cafes {
+            text-align: center;
+            color: #666;
+            margin-top: 80px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #d36b63;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #e09184;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="/images/logos.png" alt="Logo">
+    </div>
+
+    <h1>Available Cafes</h1>
+
+    <div id="cafes-container" class="cafe-container">
+        <!-- Cafe cards will be inserted dynamically -->
+    </div>
+
+    <script>
+        fetch('/get-filtered-cafes')
+            .then(response => response.json())
+            .then(cafes => {
+                const container = document.getElementById('cafes-container');
+                
+                if (cafes.length === 0) {
+                    container.innerHTML = `
+                        <div class="no-cafes">
+                            <p>No cafes match your criteria. Please try different options.</p>
+                            <a href="/location" class="back-btn">Back to Search</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                cafes.forEach(cafe => {
+                    const card = document.createElement('div');
+                    card.className = 'cafe-card';
+                    card.innerHTML = `
+                        <img src="${cafe.PHOTO_URL}" alt="${cafe.NAME}" class="cafe-image">
+                        <div class="cafe-info">
+                            <h3 class="cafe-name">${cafe.NAME}</h3>
+                            <p class="cafe-location">${cafe.LOCATION}</p>
+                            <p class="cafe-description">${cafe.DESCRIPTION}</p>
+                            <form action="/recommend-menu" method="post">
+                                <input type="hidden" name="cafeId" value="${cafe.CAFE_ID}">
+                                <button type="submit" class="select-btn">Select this cafe</button>
+                            </form>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching cafes:', error);
+                document.getElementById('cafes-container').innerHTML = `
+                    <div class="no-cafes">
+                        <p>Error loading cafes. Please try again.</p>
+                        <a href="/location" class="back-btn">Back to Search</a>
+                    </div>
+                `;
+            });
+    </script>
+</body>
+</html>

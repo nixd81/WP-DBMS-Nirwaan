@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Recommendation</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .menu-item { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .menu-header { display: flex; justify-content: space-between; }
+        .total { font-weight: bold; margin-top: 20px; }
+        button { background: #4CAF50; color: white; border: none; padding: 10px 15px; cursor: pointer; margin-top: 20px; }
+        .booking-form { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="\images\logos.png" alt="Logo"> <!-- Replace 'logo.png' with your actual logo path -->
+    </div>
+    <h1 id="cafeName">Menu Recommendation</h1>
+    <div id="menuItems"></div>
+    <div class="total">Total: €<span id="menuTotal">0</span> / Budget: €<span id="menuBudget">0</span></div>
+    
+    <div class="booking-form">
+        <h2>Book a Time Slot</h2>
+        <div>
+            <label for="reservationDate">Date:</label>
+            <input type="date" id="reservationDate" required>
+        </div>
+        <div id="timeSlots"></div>
+        <button id="bookButton" disabled>Book Now</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const cafeId = urlParams.get('cafeId');
+        const budget = urlParams.get('budget');
+        const partySize = urlParams.get('partySize');
+        
+        // Load cafe details and menu
+        fetch(`/api/cafe-menu/${cafeId}?budget=${budget}&partySize=${partySize}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('menuTotal').textContent = data.total.toFixed(2);
+                document.getElementById('menuBudget').textContent = data.budget.toFixed(2);
+                
+                const menuDiv = document.getElementById('menuItems');
+                data.menu.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'menu-item';
+                    itemDiv.innerHTML = `
+                        <div class="menu-header">
+                            <h3>${item.NAME}</h3>
+                            <span>€${item.PRICE.toFixed(2)}</span>
+                        </div>
+                    `;
+                    menuDiv.appendChild(itemDiv);
+                });
+            });
+        
+        // Load time slots when date is selected
+        document.getElementById('reservationDate').addEventListener('change', function() {
+            const date = this.value;
+            if (!date) return;
+            
+            fetch(`/api/time-slots/${cafeId}?date=${date}`)
+                .then(res => res.json())
+                .then(slots => {
+                    const slotsDiv = document.getElementById('timeSlots');
+                    slotsDiv.innerHTML = '';
+                    
+                    if (slots.length === 0) {
+                        slotsDiv.innerHTML = '<p>No available time slots for this date.</p>';
+                        document.getElementById('bookButton').disabled = true;
+                        return;
+                    }
+                    
+                    const select = document.createElement('select');
+                    select.id = 'timeSlotSelect';
+                    select.innerHTML = '<option value="">Select a time slot</option>';
+                    
+                    slots.forEach(slot => {
+                        const option = document.createElement('option');
+                        option.value = slot.TIME_SLOT_ID;
+                        option.textContent = slot.SLOT_TIME;
+                        select.appendChild(option);
+                    });
+                    
+                    slotsDiv.appendChild(select);
+                    document.getElementById('bookButton').disabled = false;
+                });
+        });
+        
+        // Handle booking
+        document.getElementById('bookButton').addEventListener('click', function() {
+            const timeSlotId = document.getElementById('timeSlotSelect').value;
+            const date = document.getElementById('reservationDate').value;
+            
+            if (!timeSlotId || !date) {
+                alert('Please select a date and time slot');
+                return;
+            }
+            
+            // In a real app, you would get the user ID from the session
+            const userId = 1; // Temporary - replace with actual user ID
+            
+            fetch('/api/make-reservation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId,
+                    cafeId,
+                    date,
+                    timeSlotId,
+                    partySize
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = `/booking-confirmation?reservationId=${data.reservationId}`;
+                } else {
+                    alert('Booking failed. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

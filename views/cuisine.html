@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cuisine Preference</title>
+    <style>
+        body {
+            background-color: #FEFAF1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #D4C9BE;
+            border: none;
+            padding: 15px 50px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2em;
+            width: 200px; /* Same width for all buttons */
+            height: 100px; /* Increased height for all buttons */
+        }
+
+        button:hover {
+            background-color: #c1b59f;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="\images\logos.png" alt="Logo"> <!-- Replace 'logo.png' with your actual logo path -->
+    </div>
+    <div class="container">
+        <h1>Select Your Cuisine Preference</h1>
+        <form action="/cuisine" method="post">
+            <button type="submit" name="cuisine" value="any">Any Cuisine</button><br>
+            <button type="submit" name="cuisine" value="Indian">Indian</button><br>
+            <button type="submit" name="cuisine" value="Chinese">Chinese</button><br>
+            <button type="submit" name="cuisine" value="Italian">Italian</button><br>
+            <button type="submit" name="cuisine" value="Thai">Thai</button><br><br>
+        </form>
+    </div>
+</body>
+</html>
